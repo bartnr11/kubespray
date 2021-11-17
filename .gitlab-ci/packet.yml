@@ -91,6 +91,11 @@ packet_debian10-containerd:
   variables:
     MITOGEN_ENABLE: "true"
 
+packet_debian11-calico:
+  stage: deploy-part2
+  extends: .packet_pr
+  when: on_success
+
 packet_centos7-calico-ha-once-localhost:
   stage: deploy-part2
   extends: .packet_pr
@@ -111,7 +116,7 @@ packet_centos8-calico:
   extends: .packet_pr
   when: on_success
 
-packet_fedora32-weave:
+packet_fedora34-weave:
   stage: deploy-part2
   extends: .packet_pr
   when: on_success
@@ -177,15 +182,18 @@ packet_fedora33-calico:
   stage: deploy-part2
   extends: .packet_periodic
   when: on_success
-  variables:
-    MITOGEN_ENABLE: "true"
+
+packet_fedora34-calico-selinux:
+  stage: deploy-part2
+  extends: .packet_periodic
+  when: on_success
 
 packet_amazon-linux-2-aio:
   stage: deploy-part2
   extends: .packet_pr
   when: manual
 
-packet_fedora32-kube-ovn-containerd:
+packet_fedora34-kube-ovn-containerd:
   stage: deploy-part2
   extends: .packet_periodic
   when: on_success
@@ -200,6 +208,14 @@ packet_centos7-weave-upgrade-ha:
   variables:
     UPGRADE_TEST: basic
     MITOGEN_ENABLE: "false"
+
+# Calico HA Wireguard
+packet_ubuntu20-calico-ha-wireguard:
+  stage: deploy-part2
+  extends: .packet_pr
+  when: manual
+  variables:
+    MITOGEN_ENABLE: "true"
 
 packet_debian9-calico-upgrade:
   stage: deploy-part3
